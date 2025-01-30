@@ -2,5 +2,13 @@ references/
 examples_packages/
 simple_exploration/
 packages/
+report/
+
+notebooks/brute_force/components2compartments2/data
+notebooks/brute_force/components2compartments2/data_mcmc
+notebooks/brute_force/components2compartments2/data_uniform
+notebooks/brute_force/components2compartments3/data
+
+notebooks/mcmc/components2compartments2/data
+
 notebooks/trial_systems/data/
-notebooks/components2compartments2/data/
