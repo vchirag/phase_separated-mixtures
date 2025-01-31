@@ -97,20 +97,6 @@ class mcmc:
 
 
 	def simulate(self, start_idx_phi_11:constants.DTYPE_I, start_idx_eta_1:constants.DTYPE_I, nSteps:constants.DTYPE_I, saveFlag:bool):
-		# walk = []
-		# walk.append([start_idx_phi_11, start_idx_eta_1])
-
-		# for step in range(nSteps):
-		# 	print([start_idx_phi_11, start_idx_eta_1])
-
-		# 	new_idx_phi_11, new_idx_eta_1 = self.metropolisStep(start_idx_phi_11, start_idx_eta_1)
-		# 	start_idx_phi_11, start_idx_eta_1 = new_idx_phi_11, new_idx_eta_1
-		# 	walk.append([start_idx_phi_11, start_idx_eta_1])
-
-		# return walk
-
-
-
 		walked_idx_phi_11 = []
 		walked_idx_eta_1 = []
 		walked_phi_11 =[]
