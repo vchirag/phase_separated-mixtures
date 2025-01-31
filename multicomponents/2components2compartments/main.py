@@ -1,30 +1,27 @@
 import sys
 sys.path.insert(0, "include/")
 
-from constants import constants
+from include.constants import constants
 
-from free_energy import flory_huggins
-
-from mcmc.mcmc import mcmc
-
-from brute_force.brute_force import brute_force
-import numpy as np
+from src.run_brute_force import run_brute_force
+from src.run_walk import run_walk
 
 
+if __name__ == "__main__":	
 
-print(constants.DTYPE_I)
-print(constants.DTYPE_F)
-print(constants.EPSILON)
+	dof = constants.DTYPE_I(2)
+	size = constants.DTYPE_I(100)
 
-print(flory_huggins.floryHuggins_2c(0.1, 0.1))
+	PHI_1_GLOBAL = constants.DTYPE_F(0.666)
+	CHI = constants.DTYPE_F(1)
 
-size = 100
-PHI_1_GLOBAL = 0.666
-CHI = 1
-beta = 10
+	run_brute_force(dof, size, PHI_1_GLOBAL, CHI)
 
-walker = mcmc(dof = 2, size = size, phi_1_global = PHI_1_GLOBAL, chi = CHI, beta = beta)
-walker.simulate(3, 3, 1000000, saveFlag=True)
 
-# brute = brute_force(2, size, PHI_1_GLOBAL, CHI)
-# brute.brute(saveFlag=True)
+	beta = 10
+	nSteps = 1000000
+
+	start_idx_phi11 = 3
+	start_idx_eta1 = 3
+
+	run_walk(dof, size, PHI_1_GLOBAL, CHI, beta, nSteps, start_idx_phi11, start_idx_eta1)
