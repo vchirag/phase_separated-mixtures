@@ -29,5 +29,5 @@ def run_walk(dof:constants.DTYPE_I, size:constants.DTYPE_I,
 			ctr += 1
 		
 		else:
-			print("False")
+			# print("False")
 			continue
