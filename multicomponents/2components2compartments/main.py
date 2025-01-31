@@ -6,6 +6,7 @@ from include.constants import constants
 from src.run_brute_force import run_brute_force
 from src.run_walk import run_walk
 
+import numpy as np
 
 if __name__ == "__main__":	
 
@@ -21,8 +22,4 @@ if __name__ == "__main__":
 	beta = 10
 	nSteps = 100
 
-	# Randomize this
-	start_idx_phi11 = 3
-	start_idx_eta1 = 3
-
-	run_walk(dof, size, PHI_1_GLOBAL, CHI, beta, nSteps, start_idx_phi11, start_idx_eta1, 3)
+	run_walk(dof, size, PHI_1_GLOBAL, CHI, beta, nSteps, 10)
