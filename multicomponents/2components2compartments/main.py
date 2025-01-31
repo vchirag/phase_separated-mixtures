@@ -19,9 +19,10 @@ if __name__ == "__main__":
 
 
 	beta = 10
-	nSteps = 1000000
+	nSteps = 100
 
+	# Randomize this
 	start_idx_phi11 = 3
 	start_idx_eta1 = 3
 
-	run_walk(dof, size, PHI_1_GLOBAL, CHI, beta, nSteps, start_idx_phi11, start_idx_eta1)
+	run_walk(dof, size, PHI_1_GLOBAL, CHI, beta, nSteps, start_idx_phi11, start_idx_eta1, 3)

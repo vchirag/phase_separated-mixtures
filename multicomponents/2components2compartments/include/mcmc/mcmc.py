@@ -96,7 +96,7 @@ class mcmc:
 			return [current_idx_phi_11, current_idx_eta_1]
 
 
-	def simulate(self, start_idx_phi_11:constants.DTYPE_I, start_idx_eta_1:constants.DTYPE_I, nSteps:constants.DTYPE_I, saveFlag:bool):
+	def simulate(self, start_idx_phi_11:constants.DTYPE_I, start_idx_eta_1:constants.DTYPE_I, nSteps:constants.DTYPE_I, saveFlag:bool, replica:constants.DTYPE_I):
 		walked_idx_phi_11 = []
 		walked_idx_eta_1 = []
 		walked_phi_11 =[]
@@ -104,40 +104,45 @@ class mcmc:
 
 		mesh = self.createMesh()
 
-		walked_idx_phi_11.append(start_idx_phi_11)
-		walked_phi_11.append(mesh[0][start_idx_phi_11])
+		# Sanity check- if the start idxs are within the constrained region or not
+		start_phi_12 = (self.phi_1_global - mesh[1][start_idx_eta_1]*mesh[0][start_idx_phi_11])/(1-mesh[1][start_idx_eta_1])
 
-		walked_idx_eta_1.append(start_idx_eta_1)
-		walked_eta_1.append(mesh[1][start_idx_eta_1])
-
-		for step in tqdm(range(nSteps)):
-			# print([start_idx_phi_11, start_idx_eta_1])
-
-			new_idx_phi_11, new_idx_eta_1 = self.metropolisStep(start_idx_phi_11, start_idx_eta_1)
-			start_idx_phi_11, start_idx_eta_1 = new_idx_phi_11, new_idx_eta_1
-
+		if 0 <= start_phi_12 <= 1:
 			walked_idx_phi_11.append(start_idx_phi_11)
 			walked_phi_11.append(mesh[0][start_idx_phi_11])
 
 			walked_idx_eta_1.append(start_idx_eta_1)
 			walked_eta_1.append(mesh[1][start_idx_eta_1])
 
-		if saveFlag:
-			df = pd.DataFrame()
-			df["idx_phi11"] = walked_idx_phi_11
-			df["idx_eta1"] = walked_idx_eta_1
-			df["phi11"] = walked_phi_11
-			df["eta1"] = walked_eta_1
+			for step in tqdm(range(nSteps)):
+				# print([start_idx_phi_11, start_idx_eta_1])
 
-			output_filepath = f"data/mcmc/mesh-{self.size}/chi-{self.chi:.3f}/phi_g-{self.phi_1_global:.3f}/df"
-			output_filename = f"df_mcmc.pkl"
+				new_idx_phi_11, new_idx_eta_1 = self.metropolisStep(start_idx_phi_11, start_idx_eta_1)
+				start_idx_phi_11, start_idx_eta_1 = new_idx_phi_11, new_idx_eta_1
 
-			if not os.path.exists(output_filepath):
-				os.makedirs(output_filepath)
+				walked_idx_phi_11.append(start_idx_phi_11)
+				walked_phi_11.append(mesh[0][start_idx_phi_11])
 
-			file = os.path.join(output_filepath, output_filename)    
-			df.to_pickle(file, compression='gzip')
-			print(f"Saved @ {file}")
+				walked_idx_eta_1.append(start_idx_eta_1)
+				walked_eta_1.append(mesh[1][start_idx_eta_1])
 
+			if saveFlag:
+				df = pd.DataFrame()
+				df["idx_phi11"] = walked_idx_phi_11
+				df["idx_eta1"] = walked_idx_eta_1
+				df["phi11"] = walked_phi_11
+				df["eta1"] = walked_eta_1
 
-		return 0
+				output_filepath = f"data/mcmc/mesh-{self.size}/chi-{self.chi:.3f}/phi_g-{self.phi_1_global:.3f}/df"
+				output_filename = f"df_mcmc-replica{replica}.pkl"
+
+				if not os.path.exists(output_filepath):
+					os.makedirs(output_filepath)
+
+				file = os.path.join(output_filepath, output_filename)    
+				df.to_pickle(file, compression='gzip')
+				print(f"Saved @ {file}")
+			return 0
+
+		else:
+			return -1
