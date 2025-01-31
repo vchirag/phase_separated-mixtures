@@ -13,13 +13,18 @@ if __name__ == "__main__":
 	dof = constants.DTYPE_I(2)
 	size = constants.DTYPE_I(100)
 
-	PHI_1_GLOBAL = constants.DTYPE_F(0.666)
-	CHI = constants.DTYPE_F(1)
+	# PHI_1_GLOBAL = constants.DTYPE_F(0.666)
+	# CHI = constants.DTYPE_F(1)
 
-	run_brute_force(dof, size, PHI_1_GLOBAL, CHI)
-
-
+	PHI_1_GLOBALs = np.linspace(1e-3, 1-1e-3, 10)
+	CHIs = np.linspace(1, 3, 10)
+	
 	beta = 10
-	nSteps = 100
+	nSteps = 1000000
 
-	run_walk(dof, size, PHI_1_GLOBAL, CHI, beta, nSteps, 10)
+	for PHI_1_GLOBAL in PHI_1_GLOBALs:
+		for CHI in CHIs:
+
+			run_brute_force(dof, size, PHI_1_GLOBAL, CHI)
+
+			run_walk(dof, size, PHI_1_GLOBAL, CHI, beta, nSteps, 5)
