@@ -133,7 +133,7 @@ class mcmc:
 				df["phi11"] = walked_phi_11
 				df["eta1"] = walked_eta_1
 
-				output_filepath = f"data/mcmc/mesh-{self.size}/chi-{self.chi:.3f}/phi_g-{self.phi_1_global:.3f}/df"
+				output_filepath = f"data/mcmc/mesh-{self.size}/chi-{self.chi:.3f}/phi_g-{self.phi_1_global:.3f}/steps-{nSteps}/beta-{self.beta}/df"
 				output_filename = f"df_mcmc-replica{replica}.pkl"
 
 				if not os.path.exists(output_filepath):

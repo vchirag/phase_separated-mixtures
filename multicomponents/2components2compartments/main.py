@@ -19,12 +19,16 @@ if __name__ == "__main__":
 	PHI_1_GLOBALs = np.linspace(1e-3, 1-1e-3, 10)
 	CHIs = np.linspace(1, 3, 10)
 	
-	beta = 10
-	nSteps = 1000000
+	BETAs = [1, 5, 10]
+	nSTEPS = [5000000]
+	# beta = 10
+	# nSteps = 1000000
 
 	for PHI_1_GLOBAL in PHI_1_GLOBALs:
 		for CHI in CHIs:
-
-			run_brute_force(dof, size, PHI_1_GLOBAL, CHI)
-
-			run_walk(dof, size, PHI_1_GLOBAL, CHI, beta, nSteps, 5)
+			
+			# run_brute_force(dof, size, PHI_1_GLOBAL, CHI)
+			
+			for beta in BETAs:
+				for nSteps in nSTEPS:
+					run_walk(dof, size, PHI_1_GLOBAL, CHI, beta, nSteps, 1)
