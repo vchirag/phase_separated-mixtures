@@ -138,7 +138,7 @@ class CoexistingPhasesFinder:
                 The maximum change of the relative compartment size :math:`J_m` per step.
                 This value is designed to reduce the risk that a the volume of a
                 compartment changes too fast before it develops meaningful composition. If
-                the intended change is larger this value, all the changes will be scaled
+                the intended change iCoexistingPhasesFinders larger this value, all the changes will be scaled
                 down to guarantee that the maximum changes do not exceed this value.
                 Typically this value can take the order of :math:`10^{-3}`, or smaller
                 when the system becomes larger or stiffer.
@@ -455,7 +455,7 @@ class CoexistingPhasesFinder:
         self.reset_revive()
         self.reinitialize_constraint()
 
-    def reinitialize_from_omegas(self, omegas: np.ndarray):
+    def reinitialize_from_omegas(self, omegas: np.ndarray,  vols: np.ndarray):
         r"""Reinitialize :math:`w_r^{(m)}` from input.
 
         Args:
@@ -464,7 +464,7 @@ class CoexistingPhasesFinder:
                 \times M`.
         """
         self._omegas = self.check_field(omegas)
-        self._Js = np.ones_like(self._Js)
+        self._Js = vols
         self.reset_revive()
         self.reinitialize_constraint()
 
